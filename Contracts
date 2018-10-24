@@ -8,7 +8,7 @@ contract Casino is usingOraclize {
    address owner;
 
    // The minimum bet a user has to make to participate in the game
-   uint public minimumBet = 10 finney; // Equal to 0.01 ether // Currently equal to ~$2
+   uint public minimumBet = 10 finney; // Finney is a like a 'cent' of Eth // Equal to 0.01 ether // Currently equal to ~$2
 
    // The total amount of Ether bet for this current game
    uint public totalBet;
@@ -65,26 +65,33 @@ contract Casino is usingOraclize {
    }
 
    /// @notice To bet for a number by sending Ether
-   /// @param numberToBet The number that the player wants to bet for. Must be between 1 and 10 both inclusive
-   function bet(uint numberToBet) payable{
+   /// @param _numbersToBet An array of the numbers the players want to bet for. All elements must be between 1 and 15 both inclusive
+   
+   function bet(uint[] _numbersToBet) payable{
 
       // Check that the max amount of bets hasn't been met yet
       assert(numberOfBets < maxAmountOfBets);
 
-      // Check that the player doesn't exists
+      // Check that the player doesn't already exists
       assert(checkPlayerExists(msg.sender) == false);
 
-      // Check that the number to bet is within the range
-      assert(numberToBet >= 1 && numberToBet <= 10);
+      // Check that the array has the correct amount of numbers
+      assert(_numbersToBet.length == 3);
+      
+      // Check that the numbers to bet are all within the range 1 - 15
+      assert(_numbersToBet[0] >= 1 && _numbersToBet[0] <= 15);
+      assert(_numbersToBet[1] >= 1 && _numbersToBet[1] <= 15);
+      assert(_numbersToBet[2] >= 1 && _numbersToBet[2] <= 15);
+     
+      
+      // Check that the amount paid is bigger or equal to the minimum bet. Ensures the bet comes in increments of roughly $2 dollars
+      assert(msg.value >= minimumBet && msg.value % 0.01 == 0);
 
-      // Check that the amount paid is bigger or equal the minimum bet
-      assert(msg.value >= minimumBet);
-
-      // Set the number bet for that player
-      playerBetsNumber[msg.sender] = numberToBet;
+      // Gives the array of betting numbers to the player
+      playerBetsNumber[msg.sender] = _numbersToBet;
 
       // The player msg.sender has bet for that number
-      numberBetPlayers[numberToBet].push(msg.sender);
+      numberBetPlayers[_numbersToBet[].push(msg.sender);
 
       numberOfBets += 1;
       totalBet += msg.value;
@@ -92,7 +99,7 @@ contract Casino is usingOraclize {
       if(numberOfBets >= maxAmountOfBets) generateNumberWinner();
    }
 
-   /// @notice Generates a random number between 1 and 10 both inclusive.
+   /// @notice Generates a random number between 1 and 15 both inclusive.
    /// Must be payable because oraclize needs gas to generate a random number.
    /// Can only be executed when the game ends.
    function generateNumberWinner() payable onEndGame {
@@ -115,16 +122,41 @@ contract Casino is usingOraclize {
 
       // Checks that the sender of this callback was in fact oraclize
       assert(msg.sender == oraclize_cbAddress());
-
-      numberWinner = (uint(sha3(_result))%10+1);
+      
+      // These will be used to produce two more winning numbers. 
+      // The hash function (sha3) ensures they will be significantly different than the first number 
+      result2 = _result + 10;
+      result3 = _result + 20;
+      
+      // This will produce a number that is always from 1-15
+      // The plus 1 ensures you will not get a zero for any given input
+      numberWinner1 = (uint(sha3(_result))%15+1);
+      numberWinner2 = (uint(sha3(result2))%15+1);
+      numberWinner3 = (uint(sha3(result3))%15+1);
+      
+      // Creates an array that holds the winning numbers. The order will not matter.
+      uint[] winningTicket[];
+      
+      // Assigns the winnings numbers to elements in the array
+      winningTicket[0] = numberWinner1;
+      winningTicket[1] = numberWinner2;
+      winningTicket[2] = numberWinner3;
+      
       distributePrizes();
    }
 
    /// @notice Sends the corresponding Ether to each winner then deletes all the
    /// players for the next game and resets the `totalBet` and `numberOfBets`
+   
+   
    function distributePrizes() onEndGame {
+      
       uint winnerEtherAmount = totalBet / numberBetPlayers[numberWinner].length; // How much each winner gets
 
+      for(uint i = 0; i <= 4; i++){
+         if nu
+      }
+      
       // Loop through all the winners to send the corresponding prize for each one
       for(uint i = 0; i < numberBetPlayers[numberWinner].length; i++){
          numberBetPlayers[numberWinner][i].transfer(winnerEtherAmount);
