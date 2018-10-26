@@ -87,15 +87,20 @@ contract Casino is usingOraclize {
       // Check that the amount paid is bigger or equal to the minimum bet. Ensures the bet comes in increments of roughly $2 dollars
       assert(msg.value >= minimumBet && msg.value % 0.01 == 0);
 
-      // Gives the array of betting numbers to the player
-      playerBetsNumber[msg.sender] = _numbersToBet;
-
+      // Gives the array of betting numbers to the player. Need to hash array because solidity cannot map arrays. 
+      // Two arrays must have the same length and content (in the same order) to have the same hash
+      playerBetsNumber[msg.sender] = uint(keccak256(_numbersToBet));
+      
+      
+      
       // The player msg.sender has bet for that number
       numberBetPlayers[_numbersToBet[].push(msg.sender);
 
+      // Increases the bets by one. Increasesthe prize pool by the amount the user calls the function with
       numberOfBets += 1;
       totalBet += msg.value;
 
+      // If this function maxes out the betting pool, a winner is generated
       if(numberOfBets >= maxAmountOfBets) generateNumberWinner();
    }
 
@@ -124,23 +129,29 @@ contract Casino is usingOraclize {
       assert(msg.sender == oraclize_cbAddress());
       
       // These will be used to produce two more winning numbers. 
-      // The hash function (sha3) ensures they will be significantly different than the first number 
+      // The hash function (keccak256) ensures they will be significantly different than the first number 
       result2 = _result + 10;
       result3 = _result + 20;
       
+    
+
+      
       // This will produce a number that is always from 1-15
       // The plus 1 ensures you will not get a zero for any given input
-      numberWinner1 = (uint(sha3(_result))%15+1);
-      numberWinner2 = (uint(sha3(result2))%15+1);
-      numberWinner3 = (uint(sha3(result3))%15+1);
+      numberWinner1 = (uint(keccak256(_result))%15+1);
+      numberWinner2 = (uint(keccak256(result2))%15+1);
+      numberWinner3 = (uint(keccak256(result3))%15+1);
       
-      // Creates an array that holds the winning numbers. The order will not matter.
+      // Creates an array that holds the winning numbers. The order will matter.
       uint[] winningTicket[];
       
       // Assigns the winnings numbers to elements in the array
       winningTicket[0] = numberWinner1;
       winningTicket[1] = numberWinner2;
       winningTicket[2] = numberWinner3;
+      
+      // Hashes the array of winning numbers to an int that can be mapped
+      uint numberWinner = uint(keccak256(winningTicket));
       
       distributePrizes();
    }
