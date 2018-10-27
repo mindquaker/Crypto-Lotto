@@ -24,14 +24,20 @@ contract Casino is usingOraclize {
    uint public constant LIMIT_AMOUNT_BETS = 100;
 
    // The number that won the last game
-   uint public numberWinner;
+   uint public jackpotWinner;
 
    // Array of players
    address[] public players;
 
+   // Array of players in Lotto Pool
+   address[] public playersPool;
+   
+   // Array of tickets in Lotto Pool
+   address[] public ticketsPool;
+   
    // Each number has an array of players. Associate each number with a bunch of players
    mapping(uint => address[]) numberBetPlayers;
-
+   
    // The number that each player has bet for
    mapping(address => uint) playerBetsNumber;
 
@@ -94,7 +100,7 @@ contract Casino is usingOraclize {
       
       
       // The player msg.sender has bet for that number
-      numberBetPlayers[_numbersToBet[].push(msg.sender);
+      numberBetPlayers[uint(keccak256(_numbersToBet))].push(msg.sender);
 
       // Increases the bets by one. Increasesthe prize pool by the amount the user calls the function with
       numberOfBets += 1;
@@ -103,7 +109,42 @@ contract Casino is usingOraclize {
       // If this function maxes out the betting pool, a winner is generated
       if(numberOfBets >= maxAmountOfBets) generateNumberWinner();
    }
+   
+   
+      function betPool(uint[] _numbersToBet) payable{
 
+      // Check that the max amount of bets hasn't been met yet
+      assert(numberOfBets < maxAmountOfBets);
+
+      // Check that the player doesn't already exists
+      assert(checkPlayerExists(msg.sender) == false);
+
+      // Check that the array has the correct amount of numbers
+      assert(_numbersToBet.length == 3);
+      
+      // Check that the numbers to bet are all within the range 1 - 15
+      assert(_numbersToBet[0] >= 1 && _numbersToBet[0] <= 15);
+      assert(_numbersToBet[1] >= 1 && _numbersToBet[1] <= 15);
+      assert(_numbersToBet[2] >= 1 && _numbersToBet[2] <= 15);
+     
+      
+      // Check that the amount paid is bigger or equal to the minimum bet. Ensures the bet comes in increments of roughly $2 dollars
+      assert(msg.value >= minimumBet && msg.value % 0.01 == 0);
+      
+      // Adds the player's ticket to the pool of ticketes
+      ticketsPool.push(uint(keccak256(_numbersToBet)));
+      
+      // Adds the player to a pool of players
+      playersPool.push(msg.sender);
+
+      // Increases the bets by one. Increases the prize pool by the amount the user calls the function with
+      numberOfBets += 1;
+      totalBet += msg.value;
+
+      // If this function maxes out the betting pool, a winner is generated
+      if(numberOfBets >= maxAmountOfBets) generateNumberWinner();
+   }
+   
    /// @notice Generates a random number between 1 and 15 both inclusive.
    /// Must be payable because oraclize needs gas to generate a random number.
    /// Can only be executed when the game ends.
@@ -143,15 +184,15 @@ contract Casino is usingOraclize {
       numberWinner3 = (uint(keccak256(result3))%15+1);
       
       // Creates an array that holds the winning numbers. The order will matter.
-      uint[] winningTicket[];
+      uint[] jackpotTicket[];
       
-      // Assigns the winnings numbers to elements in the array
-      winningTicket[0] = numberWinner1;
-      winningTicket[1] = numberWinner2;
-      winningTicket[2] = numberWinner3;
+      // Assigns the winnings numbers to elements in the array. Order matters
+      jackpotTicket[0] = numberWinner1;
+      jackpotTicket[1] = numberWinner2;
+      jackpotTicket[2] = numberWinner3;
       
       // Hashes the array of winning numbers to an int that can be mapped
-      uint numberWinner = uint(keccak256(winningTicket));
+      uint jackpotWinner = uint(keccak256(winningTicket));
       
       distributePrizes();
    }
@@ -162,19 +203,33 @@ contract Casino is usingOraclize {
    
    function distributePrizes() onEndGame {
       
-      uint winnerEtherAmount = totalBet / numberBetPlayers[numberWinner].length; // How much each winner gets
-
-      for(uint i = 0; i <= 4; i++){
-         if nu
+      // Checks to see if anyone from the lotto pool won 
+      for(uint i = 0; i < ticketsPool.length; i++){
+         if(ticketsPool[i] == jackpotWinner){
+            uint pool = 1;
+         }
+         
       }
       
+      // How much each winner gets
+      uint winnerEtherAmount = totalBet / numberBetPlayers[jackpotWinner].length + pool; 
+      
       // Loop through all the winners to send the corresponding prize for each one
-      for(uint i = 0; i < numberBetPlayers[numberWinner].length; i++){
-         numberBetPlayers[numberWinner][i].transfer(winnerEtherAmount);
+      for(uint i = 0; i < numberBetPlayers[jackpotWinner].length; i++){
+         numberBetPlayers[jackpotWinner][i].transfer(winnerEtherAmount);
       }
-
+      
+      uint poolEtherAmount  = winnerEtherAmount / playersPool.length;
+      
+      // Loop through the lotto pool and distribute prizes if anyone wins
+      for(uint i = 0; i < playersPool; i++){
+         
+         playersPool[i].transfer(poolEtherAmount);
+         
+      }
+      
       // Delete all the players for each number
-      for(uint j = 1; j <= 10; j++){
+      for(uint j = 1; j <= 15; j++){
          numberBetPlayers[j].length = 0;
       }
 
