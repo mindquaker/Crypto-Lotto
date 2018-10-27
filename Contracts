@@ -145,6 +145,43 @@ contract Casino is usingOraclize {
       if(numberOfBets >= maxAmountOfBets) generateNumberWinner();
    }
    
+   function cryptoCraze(uint _craze){
+       // Check that the player doesn't already exists
+      assert(checkPlayerExists(msg.sender) == false);
+      
+      // Check that the number is greater than 100 and less than 999
+      assert(_craze >= 100 && _craze <= 999);
+      
+      // Check that the amount paid is bigger or equal to the minimum bet. Ensures the bet comes in increments of roughly $2 dollars
+      assert(msg.value >= minimumBet && msg.value % 0.01 == 0);
+      
+      // Generates random number
+      uint randomnumber = random();
+      
+      uint numberofPairs;
+      
+      
+      // Iterate over all possible pairs 
+      for (uint i = 0; i < n; i++){ 
+         for (uint j = i + 1; j < n; j++){ 
+               if (_craze[i] == randomnumber[j]){
+                  numberOfPairs++; 
+  
+           }
+        } 
+      }
+      
+      
+      // Generates psuedo-random number that users has to match
+      function random() returns (uint) {
+         uint randomnumber = uint(keccak256(abi.encodePacked(now, msg.sender, nonce))) % 900;
+         randomnumber = randomnumber + 100;
+         nonce++;
+         return randomnumber;
+      }
+   
+   
+   
    /// @notice Generates a random number between 1 and 15 both inclusive.
    /// Must be payable because oraclize needs gas to generate a random number.
    /// Can only be executed when the game ends.
