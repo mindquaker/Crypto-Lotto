@@ -1,0 +1,30 @@
+var button1 = document.querySelectorAll('.row1');
+var button2 = document.querySelectorAll('.row2');
+var button3 = document.querySelectorAll('.row3');
+
+for(var i =0; i < button1.length; i++){
+button1[i].addEventListener("click", displaynumberone);
+}
+for(var i =0; i < button2.length; i++){
+button2[i].addEventListener("click", displaynumbertwo);
+}
+for(var i =0; i < button3.length; i++){
+
+  button3[i].addEventListener("click", displaynumberthree);
+
+}
+function displaynumberone() {
+  var number = this.innerHTML;
+  document.getElementById('n1').innerHTML= number;
+  console.log("yups");
+}
+function displaynumbertwo() {
+  var number = this.innerHTML;
+  document.getElementById('n2').innerHTML= number;
+  console.log("yups");
+}
+function displaynumberthree() {
+  var number = this.innerHTML;
+  document.getElementById('n3').innerHTML= number;
+  console.log("yups");
+}
