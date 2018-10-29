@@ -1,7 +1,8 @@
 body{
     font-family: 'open sans';
     margin: 0;
-    background-image: url("https://goo.gl/images/34262D ");
+
+    background-image: url("https://www.almightyvikings.com/images/game_backgrounds/BridesmaidsBackground.jpg");
 }
 ul{
     list-style-type: none;
@@ -24,7 +25,7 @@ li:active{
     opacity: 0.7;
 }
 *{
-   color: #444444;
+   color: white;
 }
 .main-container{
    padding: 20px;
@@ -48,30 +49,33 @@ li:active{
 .row1
 {
   padding: 20px;
-  border: 2px solid rgb(30,134,255);
+  border: 2px solid rgb(0,0,0);
   margin-right: 15px;
   border-radius: 75px;
   cursor: pointer;
+  color: black;
   background-color: yellow;
   font-weight: bold;
 }
 .row2
 {
   padding: 20px;
-  border: 2px solid rgb(30,134,255);
+  border: 2px solid rgb(0,0,0);
   margin-right: 15px;
   border-radius: 75px;
   cursor: pointer;
+  color: black;
   background-color: yellow;
   font-weight: bold;
 }
 .row3
 {
   padding: 20px;
-  border: 2px solid rgb(30,134,255);
+  border: 2px solid rgb(0,0,0);
   margin-right: 15px;
   border-radius: 75px;
   cursor: pointer;
+  color: black;
   background-color: yellow;
   font-weight: bold;
 }
