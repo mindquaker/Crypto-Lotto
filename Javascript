@@ -9,22 +9,31 @@ for(var i =0; i < button2.length; i++){
 button2[i].addEventListener("click", displaynumbertwo);
 }
 for(var i =0; i < button3.length; i++){
-
-  button3[i].addEventListener("click", displaynumberthree);
-
+button3[i].addEventListener("click", displaynumberthree);
 }
+
 function displaynumberone() {
   var number = this.innerHTML;
-  document.getElementById('n1').innerHTML= number;
+  document.getElementById("n1").style.fontSize = "50px";
+  document.getElementById("n1").style.color = "black";
+  document.getElementById("n1").innerHTML = number;
+  this.style.backgroundColor = "Yellow";
   console.log("yups");
 }
+
 function displaynumbertwo() {
   var number = this.innerHTML;
-  document.getElementById('n2').innerHTML= number;
+  document.getElementById("n2").style.fontSize = "50px";
+  document.getElementById("n2").style.color = "black";
+  document.getElementById("n2").innerHTML= number;
+  this.style.backgroundColor = "Yellow";
   console.log("yups");
 }
 function displaynumberthree() {
   var number = this.innerHTML;
-  document.getElementById('n3').innerHTML= number;
+  document.getElementById("n3").style.fontSize = "50px";
+  document.getElementById("n3").style.color = "black";
+  document.getElementById("n3").innerHTML= number;
+  this.style.backgroundColor = "Yellow";
   console.log("yups");
 }
