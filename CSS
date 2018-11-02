@@ -105,50 +105,20 @@ li:active{
   background-color:  yellow;
 }
 
-#n1
+#n1, #n2, #n3
 {
   padding: 20px;
   border: 2px solid rgb(0,0,0);
-  margin-right: 15px;
+  margin-left: 50px;
+  margin-right: 50px;
   border-radius: 75px;
-  width: 55px;
-  height: 55px;
+  width: 65px;
+  height: 65px;
   cursor: pointer;
   text-align: center;
   color: black;
   background-color: Yellow;
   font-weight: bold;
   font-size: 50px;
-}
-
-#n2
-{
-  padding: 20px;
-  border: 2px solid rgb(0,0,0);
-  margin-right: 15px;
-  border-radius: 75px;
-  width: 55px;
-  height: 55px;
-  cursor: pointer;
-  text-align: center;
-  color: black;
-  background-color: Yellow;
-  font-weight: bold;
-  font-size: 50px;
-}
-
-#n3
-{
-  padding: 20px;
-  border: 2px solid rgb(0,0,0);
-  margin-right: 15px;
-  border-radius: 75px;
-  width: 55px;
-  height: 55px;
-  cursor: pointer;
-  text-align: center;
-  color: black;
-  background-color: Yellow;
-  font-weight: bold;
-  font-size: 50px;
+  display: inline-table;
 }
