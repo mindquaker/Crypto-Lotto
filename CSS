@@ -1,5 +1,5 @@
 body{
-    font-family: 'open sans';
+    font-family: 'comic sans';
     margin: 0;
 
     background-image: url("https://www.almightyvikings.com/images/game_backgrounds/BridesmaidsBackground.jpg");
@@ -10,29 +10,35 @@ ul{
     display: flex;
 }
 .button{}
+
+* {
+  color: white;
+}
 li{
     padding: 20px;
     border: 2px solid rgb(30,134,255);
     margin-right: 15px;
     border-radius: 75px;
     cursor: pointer;
+
 }
 li:hover{
-    background-color: rgb(30,134,255);
-    color: white;
+    background-color: yellow;
+    color: black;
 }
 li:active{
-    opacity: 0.7;
+    background-color: yellow;
+    color: black;
 }
-*{
-   color: white;
-}
+
 .main-container{
    padding: 20px;
+   color: white;
 }
 .block{
    display: flex;
    align-items: center;
+
 }
 .number-selected{
    background-color: rgb(30,134,255);
@@ -54,7 +60,7 @@ li:active{
   border-radius: 75px;
   cursor: pointer;
   color: black;
-  background-color: yellow;
+  background-color: white;
   font-weight: bold;
 }
 .row2
@@ -65,7 +71,7 @@ li:active{
   border-radius: 75px;
   cursor: pointer;
   color: black;
-  background-color: yellow;
+  background-color: white;
   font-weight: bold;
 }
 .row3
@@ -76,6 +82,73 @@ li:active{
   border-radius: 75px;
   cursor: pointer;
   color: black;
-  background-color: yellow;
+  background-color: white;
   font-weight: bold;
+}
+
+.home-menu
+{
+    padding: 25px;
+    border: 2px solid rgb(0,0,0);
+    color: black;
+    background-color: white;
+    border-radius: 10px;
+    width: 75px;
+    height: 20px;
+    text-align: center;
+    cursor: pointer;
+    font-size: 16px;
+    margin:auto;
+}
+
+.home-menu:hover{
+  background-color:  yellow;
+}
+
+#n1
+{
+  padding: 20px;
+  border: 2px solid rgb(0,0,0);
+  margin-right: 15px;
+  border-radius: 75px;
+  width: 55px;
+  height: 55px;
+  cursor: pointer;
+  text-align: center;
+  color: black;
+  background-color: Yellow;
+  font-weight: bold;
+  font-size: 50px;
+}
+
+#n2
+{
+  padding: 20px;
+  border: 2px solid rgb(0,0,0);
+  margin-right: 15px;
+  border-radius: 75px;
+  width: 55px;
+  height: 55px;
+  cursor: pointer;
+  text-align: center;
+  color: black;
+  background-color: Yellow;
+  font-weight: bold;
+  font-size: 50px;
+}
+
+#n3
+{
+  padding: 20px;
+  border: 2px solid rgb(0,0,0);
+  margin-right: 15px;
+  border-radius: 75px;
+  width: 55px;
+  height: 55px;
+  cursor: pointer;
+  text-align: center;
+  color: black;
+  background-color: Yellow;
+  font-weight: bold;
+  font-size: 50px;
 }
