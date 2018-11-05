@@ -51,7 +51,7 @@ li:active{
    margin: 0 10px;
 }
 
-.row1
+.row1, .row2, .row3, .row4, .row5
 {
   padding: 20px;
   border: 2px solid rgb(0,0,0);
@@ -62,28 +62,7 @@ li:active{
   background-color: white;
   font-weight: bold;
 }
-.row2
-{
-  padding: 20px;
-  border: 2px solid rgb(0,0,0);
-  margin-right: 15px;
-  border-radius: 75px;
-  cursor: pointer;
-  color: black;
-  background-color: white;
-  font-weight: bold;
-}
-.row3
-{
-  padding: 20px;
-  border: 2px solid rgb(0,0,0);
-  margin-right: 15px;
-  border-radius: 75px;
-  cursor: pointer;
-  color: black;
-  background-color: white;
-  font-weight: bold;
-}
+
 
 
 ul1{
@@ -112,7 +91,7 @@ a:hover{
 }
 
 
-#n1, #n2, #n3
+#n1, #n2, #n3, #n4, #n5
 {
   padding: 20px;
   border: 2px solid rgb(0,0,0);
@@ -134,7 +113,7 @@ a:hover{
     animation:blinkingText 1.0s infinite;
     font-size: 50px;
     font-weight: bolder;
-    
+
 }
 @keyframes blinkingText{
     100%{   color: yellow;    }
