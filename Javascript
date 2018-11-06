@@ -4,6 +4,7 @@ var button3 = document.querySelectorAll('.row3');
 var button4 = document.querySelectorAll('.row4');
 var button5 = document.querySelectorAll('.row5');
 
+var count1 = 1;
 for(var i =0; i < button1.length; i++){
 button1[i].addEventListener("click", displaynumberone);
 }
@@ -20,12 +21,23 @@ for(var i =0; i < button3.length; i++){
 button5[i].addEventListener("click", displaynumberfive);
 }
 
+
+
 function displaynumberone() {
   var number = this.innerHTML;
   document.getElementById("n1").style.fontSize = "50px";
   document.getElementById("n1").style.color = "black";
   document.getElementById("n1").innerHTML = number;
-  this.style.backgroundColor = "Yellow";
+
+  if (count1 == 0){
+    this.style.backgroundColor = "White";
+    count1 = 1;
+  }
+  else {
+    this.style.backgroundColor = "Yellow";
+    count1 = 0;
+  }
+
   console.log("yups");
 }
 
